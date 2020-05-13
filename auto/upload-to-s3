@@ -1,0 +1,16 @@
+#! /bin/bash -ex
+cd $(dirname $0)/..
+
+VERSION="v$(git log -1 --pretty=%h)"
+ARTIFACT="yutingli-lambda-function-${VERSION}.zip"
+SOURCE="./dist/${ARTIFACT}"
+
+echo 'start build zip'
+
+mkdir dist || true
+zip -r9 ${SOURCE} index.js
+zip -r9 ${SOURCE} src
+
+echo 'calling aws s3 cli to upload lambda zip file'
+aws s3 cp "${SOURCE}" "s3://training-yutingli-lambda-bucket/${ARTIFACT}" --profile aws-training-profile
+echo 'done upload'

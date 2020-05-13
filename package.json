@@ -1,0 +1,25 @@
+{
+  "name": "lambda-exec",
+  "version": "1.0.0",
+  "description": "yutingli-week2-lambda-exec",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internal-aws-training/yutingli-week2-lambda-exec.git"
+  },
+  "author": "Yuting LI",
+  "license": "NO LICENSE",
+  "bugs": {
+    "url": "https://github.com/internal-aws-training/yutingli-week2-lambda-exec/issues"
+  },
+  "homepage": "https://github.com/internal-aws-training/yutingli-week2-lambda-exec#readme",
+  "dependencies": {
+    "aws-sdk": "^2.673.0",
+    "eslint": "^7.0.0",
+    "prettier": "^2.0.5"
+  }
+}
