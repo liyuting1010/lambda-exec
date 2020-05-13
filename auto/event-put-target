@@ -1,0 +1,8 @@
+#! /bin/bash -ex
+cd $(dirname $0)/..
+
+aws events put-targets \
+    --rule yuting-lambda-scheduled-rule \
+    --profile aws-training-profile \
+    --region ap-southeast-1 \
+    --targets "Id"="1","Arn"="arn:aws:lambda:ap-southeast-1:494526681395:function:aws-training-yutingli-lambda-Function-H7X32DUH005Y"
