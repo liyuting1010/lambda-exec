@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Simple lambda function.
+Parameters:
+  LambdaBucketName:
+    Default: training-yutingli-lambda-bucket
+    Type: String
+  LambdaCode:
+    Type: String
+Resources:
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+  Policy:
+    Type: AWS::IAM::Policy
+    Properties:
+      Roles:
+        - Ref: Role
+      PolicyName: lambdaPolicy
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action:
+              - cloudwatch:PutMetricData
+            Resource: "*"
+          - Effect: Allow
+            Action:
+              - s3:ListBucket
+              - s3:GetObject
+              - s3:PutObject
+            Resource:
+              Fn::Join:
+                - ''
+                - - 'arn:aws:s3:::'
+                  - Ref: LambdaBucketName
+                  - "/*"
+          - Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+            Resource: "*"
+  LambdaScheduledRule:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: aws-training-yutingli-lambda-Function-H7X32DUH005Y
+      Principal: events.amazonaws.com
+      SourceArn: arn:aws:events:ap-southeast-1:494526681395:rule/yuting-lambda-scheduled-rule
+  Function:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Code:
+        S3Bucket:
+          Ref: LambdaBucketName
+        S3Key:
+          Ref: LambdaCode
+      Runtime: nodejs10.x
+      Role:
+        Fn::GetAtt:
+          - Role
+          - Arn
+      Timeout: 10

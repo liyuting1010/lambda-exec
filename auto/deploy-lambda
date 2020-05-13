@@ -1,0 +1,12 @@
+#! /bin/bash -eu
+cd $(dirname $0)/..
+
+aws cloudformation deploy \
+    --stack-name aws-training-yutingli-lambda \
+    --template-file configs/lambda.yml \
+    --no-fail-on-empty-changeset \
+    --capabilities CAPABILITY_NAMED_IAM \
+    --parameter-overrides \
+    LambdaCode="yutingli-lambda-function-v$(git log -1 --pretty=%h).zip" \
+    --profile aws-training-profile \
+    --region ap-southeast-1 \
