@@ -4,5 +4,6 @@ cd $(dirname $0)/..
 aws events put-rule \
     --name yuting-lambda-scheduled-rule \
     --schedule-expression 'rate(60 minutes)' \
+    --event-pattern "{\"filename\": [\"test.json\"]}" \
     --profile aws-training-profile \
     --region ap-southeast-1
